@@ -40,20 +40,20 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-lg shadow-orange-500/35 border-t border-amber-300 hover:brightness-105',
-    secondary: 'bg-[#1C0D36] border-2 border-amber-400/40 text-amber-200 hover:bg-[#28144B] hover:border-amber-300 shadow-md',
-    success: 'bg-gradient-to-r from-emerald-600 via-teal-600 to-teal-700 text-white shadow-lg shadow-teal-600/30 border-t border-teal-300 hover:brightness-105',
-    accent: 'bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 text-white shadow-lg shadow-rose-600/35 border-t border-pink-300 hover:brightness-105',
-    danger: 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-lg shadow-red-600/30',
-    gold: 'bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-900 font-black shadow-lg shadow-yellow-500/35 border-t border-yellow-100 hover:brightness-105',
-    glass: 'bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 shadow-lg'
+    primary: 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-md shadow-orange-950/40 border-t border-amber-300/60 hover:brightness-105 active:brightness-95',
+    secondary: 'bg-[#1C0D36]/90 border border-amber-400/40 text-amber-200 hover:bg-[#28144B] hover:border-amber-300 active:bg-[#15092A] shadow-md shadow-purple-950/40',
+    success: 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white shadow-md shadow-emerald-950/40 border-t border-teal-300/60 hover:brightness-105 active:brightness-95',
+    accent: 'bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 text-white shadow-md shadow-pink-950/40 border-t border-pink-300/60 hover:brightness-105 active:brightness-95',
+    danger: 'bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-md shadow-red-950/40 border-t border-red-300/50',
+    gold: 'bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-950 font-black shadow-md shadow-amber-950/40 border-t border-yellow-200 hover:brightness-105 active:brightness-95',
+    glass: 'bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 active:bg-white/5 shadow-md'
   };
 
   const sizeStyles = {
     sm: 'px-3 py-1.5 text-xs sm:text-sm min-h-[38px] rounded-xl',
     md: 'px-4 py-2.5 text-sm sm:text-base min-h-[46px] rounded-2xl',
-    lg: 'px-6 py-3.5 text-base sm:text-lg min-h-[52px] rounded-2xl tracking-wide',
-    xl: 'px-8 py-4 text-lg sm:text-xl min-h-[60px] rounded-3xl font-black tracking-wider'
+    lg: 'px-6 py-3 text-base sm:text-lg min-h-[50px] rounded-2xl tracking-wide',
+    xl: 'px-8 py-3.5 text-lg sm:text-xl min-h-[56px] rounded-3xl font-black tracking-wider'
   };
 
   return (
@@ -62,7 +62,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       disabled={disabled}
       className={`
         relative inline-flex items-center justify-center font-bold select-none cursor-pointer
-        transform active:scale-95 transition-all duration-150 ease-out
+        transform active:scale-[0.96] transition-all duration-120 ease-out will-change-transform
         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
         ${variantStyles[variant]}
         ${sizeStyles[size]}
@@ -71,7 +71,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       {...props}
     >
       {icon && <span className="mr-2 inline-flex items-center text-lg">{icon}</span>}
-      <span>{children}</span>
+      <span className="drop-shadow-sm">{children}</span>
     </button>
   );
 };

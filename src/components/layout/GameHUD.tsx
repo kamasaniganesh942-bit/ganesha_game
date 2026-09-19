@@ -41,23 +41,23 @@ export const GameHUD: React.FC<GameHUDProps> = ({ onPause, onReplay, onBack, sho
         </div>
 
         {/* Right: Stats & Quick Actions */}
-        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {/* Money (Day 1 or when > 0) - Turquoise Accent */}
           {(state.currentDay === 1 || state.money > 0) && (
-            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-teal-950/70 border border-teal-400/35 text-teal-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap">
+            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-teal-950/70 border border-teal-400/35 text-teal-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap shrink-0">
               <Coins className="w-3.5 h-3.5 text-teal-400 shrink-0" />
               <span>₹{state.money}</span>
             </div>
           )}
 
           {/* Score - Warm Gold Accent */}
-          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-950/70 border border-amber-400/35 text-amber-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap">
+          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-950/70 border border-amber-400/35 text-amber-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap shrink-0">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
             <span>{state.score}</span>
           </div>
 
           {/* Tokens - Festival Pink Accent */}
-          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-pink-950/70 border border-pink-400/35 text-pink-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap">
+          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-pink-950/70 border border-pink-400/35 text-pink-300 font-black text-[11px] sm:text-xs shadow-sm whitespace-nowrap shrink-0">
             <Ticket className="w-3.5 h-3.5 text-pink-400 shrink-0" />
             <span>{state.tokens}</span>
           </div>
