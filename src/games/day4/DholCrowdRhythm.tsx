@@ -44,8 +44,8 @@ export const DholCrowdRhythm: React.FC<DholCrowdRhythmProps> = ({ onWin }) => {
     const interval = setInterval(() => {
       tick++;
 
-      // Spawn new beat prompt every 18 ticks (if < 12 completed)
-      if (tick % 18 === 0 && successfulBeatsRef.current < 12) {
+      // Spawn new beat prompt every 15 ticks (if < 8 completed)
+      if (tick % 15 === 0 && successfulBeatsRef.current < 8) {
         const types: ActionType[] = ['drum', 'clap', 'light', 'flower'];
         const randomType = types[Math.floor(Math.random() * types.length)];
         setPrompts(prev => [
@@ -63,12 +63,12 @@ export const DholCrowdRhythm: React.FC<DholCrowdRhythmProps> = ({ onWin }) => {
       setPrompts(prev => {
         const next: RhythmPrompt[] = [];
         for (const p of prev) {
-          const nextY = p.y + 3.5;
+          const nextY = p.y + 4.2;
           // If missed past 94%
           if (nextY > 94 && !p.hit) {
             setCombo(0);
             setFeedback('MISSED!');
-            setTimeout(() => setFeedback(null), 400);
+            setTimeout(() => setFeedback(null), 300);
             continue;
           }
           if (nextY <= 100) {
@@ -77,14 +77,14 @@ export const DholCrowdRhythm: React.FC<DholCrowdRhythmProps> = ({ onWin }) => {
         }
         return next;
       });
-    }, 60);
+    }, 55);
 
     return () => clearInterval(interval);
   }, []);
 
   const handleAction = (action: ActionType) => {
-    // Find closest prompt in strike zone (y ~ 65% to 88%)
-    const target = prompts.find(p => !p.hit && p.y >= 62 && p.y <= 90);
+    // Find closest prompt in strike zone (y ~ 60% to 92%)
+    const target = prompts.find(p => !p.hit && p.y >= 58 && p.y <= 92);
 
     if (target && target.type === action) {
       // Perfect Hit
@@ -97,31 +97,31 @@ export const DholCrowdRhythm: React.FC<DholCrowdRhythmProps> = ({ onWin }) => {
       const nextBeats = successfulBeats + 1;
       setCombo(nextCombo);
       setSuccessfulBeats(nextBeats);
-      setScore(s => s + 30 * Math.min(nextCombo, 4));
+      setScore(s => s + 40 * Math.min(nextCombo, 4));
       setFeedback('PERFECT! 🎉');
-      setTimeout(() => setFeedback(null), 300);
+      setTimeout(() => setFeedback(null), 250);
 
       setPrompts(prev =>
         prev.map(p => (p.id === target.id ? { ...p, hit: true } : p))
       );
 
-      if (nextBeats >= 12) {
+      if (nextBeats >= 8) {
         soundManager.playFanfare();
         setTimeout(() => {
           onWin({
             performance: 'PERFECT',
             stars: 3,
-            score: score + 300,
+            score: 250 + combo * 10,
             tokens: 25
           });
-        }, 1200);
+        }, 400);
       }
     } else {
       // Off beat
       soundManager.playError();
       setCombo(0);
       setFeedback('OFF BEAT!');
-      setTimeout(() => setFeedback(null), 300);
+      setTimeout(() => setFeedback(null), 250);
     }
   };
 

@@ -102,7 +102,7 @@ export const ProcessionPreparation: React.FC<ProcessionPreparationProps> = ({ on
             score: 250,
             tokens: 25
           });
-        }, 1800);
+        }, 450);
       }
     } else {
       soundManager.playError();

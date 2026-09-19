@@ -46,12 +46,12 @@ export const TutorialModal: React.FC<TutorialModalProps> = ({ game, onStart }) =
         <AnimatedButton
           variant="gold"
           size="lg"
-          className="w-full text-lg shadow-orange-500/40"
+          className="w-full text-base sm:text-lg shadow-orange-500/40 tracking-wider font-black"
           icon={<Play className="w-5 h-5 fill-current" />}
           soundType="dhol"
           onClick={onStart}
         >
-          START
+          PLAY
         </AnimatedButton>
       </div>
     </div>

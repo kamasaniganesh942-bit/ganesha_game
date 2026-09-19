@@ -86,7 +86,7 @@ export const MemoryJourney: React.FC<MemoryJourneyProps> = ({ onWin }) => {
             score: 260 - mistakes * 20,
             tokens: 25
           });
-        }, 2200);
+        }, 450);
       }
     } else {
       soundManager.playError();

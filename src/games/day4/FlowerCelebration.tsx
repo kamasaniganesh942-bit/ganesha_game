@@ -56,10 +56,10 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
     const interval = setInterval(() => {
       counter++;
 
-      // Spawn falling flowers every 10 ticks
-      if (counter % 10 === 0 && flowersCollectedRef.current < 15) {
+      // Spawn falling flowers every 7 ticks
+      if (counter % 7 === 0 && flowersCollectedRef.current < 6) {
         const lane = Math.floor(Math.random() * 3);
-        const isStar = Math.random() > 0.75;
+        const isStar = Math.random() > 0.65;
         const flowerIcons = ['🌸', '🌺', '🌼', '🏵️'];
         const randomIcon = isStar ? '⭐' : flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
 
@@ -79,7 +79,7 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
       setBlooms(prev => {
         const next: BloomItem[] = [];
         for (const b of prev) {
-          const nextY = b.y + 4;
+          const nextY = b.y + 5;
           // Catch zone near bottom basket (y ~ 74% to 88%)
           if (nextY >= 72 && nextY <= 86 && b.lane === basketLaneRef.current) {
             if (b.isStar) {
@@ -92,7 +92,7 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
             }
 
             // Check goal
-            if (flowersCollectedRef.current + 1 >= 15 && starsCollectedRef.current >= 2) {
+            if (flowersCollectedRef.current + 1 >= 6 && starsCollectedRef.current >= 1) {
               setIsCompleted(true);
               soundManager.playFanfare();
               setTimeout(() => {
@@ -102,7 +102,7 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
                   score: 280,
                   tokens: 25
                 });
-              }, 1800);
+              }, 450);
             }
             continue;
           }
@@ -113,7 +113,7 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
         }
         return next;
       });
-    }, 70);
+    }, 60);
 
     return () => clearInterval(interval);
   }, [isCompleted, onWin]);
@@ -134,12 +134,12 @@ export const FlowerCelebration: React.FC<FlowerCelebrationProps> = ({ onWin }) =
           {/* Star Blooms */}
           <div className="flex items-center gap-1 bg-amber-900/80 px-2 py-1 rounded-xl border border-amber-500/40 text-xs font-black text-amber-300">
             <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
-            <span>{starsCollected} / 2</span>
+            <span>{starsCollected} / 1</span>
           </div>
 
           {/* Flowers */}
           <div className="bg-amber-900/80 px-2.5 py-1 rounded-xl border border-amber-500/40 text-xs font-black text-rose-300">
-            🌸 {flowersCollected} / 15
+            🌸 {flowersCollected} / 6
           </div>
         </div>
       </div>

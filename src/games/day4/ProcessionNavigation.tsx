@@ -95,7 +95,7 @@ export const ProcessionNavigation: React.FC<ProcessionNavigationProps> = ({ onWi
             score: 240 - wrongTurns * 20,
             tokens: 25
           });
-        }, 1800);
+        }, 450);
       } else {
         setCurrentZoneIdx(z => z + 1);
         setFeedback('Route cleared! Progressing into the next area.');

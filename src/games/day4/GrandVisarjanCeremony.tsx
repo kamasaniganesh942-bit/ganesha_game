@@ -77,7 +77,7 @@ export const GrandVisarjanCeremony: React.FC<GrandVisarjanCeremonyProps> = ({ on
           soundManager.playFanfare();
           setPhase(5);
 
-          // Conclude after emotional cinematic moment
+          // Conclude after emotional blessing moment
           setTimeout(() => {
             onWin({
               performance: 'PERFECT',
@@ -85,7 +85,7 @@ export const GrandVisarjanCeremony: React.FC<GrandVisarjanCeremonyProps> = ({ on
               score: 500,
               tokens: 50
             });
-          }, 3500);
+          }, 1200);
 
           return 100;
         }

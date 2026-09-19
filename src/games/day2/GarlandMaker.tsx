@@ -22,20 +22,20 @@ const FLOWERS: FlowerOption[] = [
 ];
 
 const PATTERNS = [
-  // Round 1: Simple 2-flower rhythm
+  // Round 1: Simple 2-flower rhythm (4 flowers)
   {
     name: 'Genda Toran',
-    target: ['yellow_marigold', 'orange_marigold', 'yellow_marigold', 'orange_marigold', 'yellow_marigold', 'orange_marigold']
+    target: ['yellow_marigold', 'orange_marigold', 'yellow_marigold', 'orange_marigold']
   },
-  // Round 2: Rose & Jasmine devotion
+  // Round 2: Rose & Jasmine devotion (4 flowers)
   {
     name: 'Gulab Mogra Haar',
-    target: ['red_rose', 'jasmine', 'red_rose', 'jasmine', 'red_rose', 'jasmine']
+    target: ['red_rose', 'jasmine', 'red_rose', 'jasmine']
   },
-  // Round 3: Sacred 3-flower royal garland
+  // Round 3: Royal Trio Mala (4 flowers)
   {
     name: 'Royal Trio Mala',
-    target: ['yellow_marigold', 'red_rose', 'jasmine', 'yellow_marigold', 'red_rose', 'jasmine']
+    target: ['yellow_marigold', 'red_rose', 'orange_marigold', 'jasmine']
   }
 ];
 
@@ -75,7 +75,7 @@ export const GarlandMaker: React.FC<GarlandMakerProps> = ({ onWin }) => {
               tokens: 20
             });
           }
-        }, 1200);
+        }, 400);
       }
     } else {
       soundManager.playError();

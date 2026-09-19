@@ -21,12 +21,15 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
   const [diyaLitProgress, setDiyaLitProgress] = useState(0); // 0 to 100%
   const diyaHoldInterval = useRef<any>(null);
 
-  // Step 2 state: Aarti Circles
+  // Step 2 state: Aarti Circles & Angle
   const [aartiCircles, setAartiCircles] = useState(0); // target 3
+  const [flameAngle, setFlameAngle] = useState(0);
+  const aartiContainerRef = useRef<HTMLDivElement>(null);
+  const prevAngleRef = useRef<number | null>(null);
+  const accumulatedDegRef = useRef(0);
 
   // Step 3 state: Bell Rings
-  const [bellRings, setBellRings] = useState(0); // target 5
-
+  const [bellRings, setBellRings] = useState(0); // target 4
   // Step 4 state: Modak offered
   const [modakOffered, setModakOffered] = useState(false);
 
@@ -36,17 +39,17 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
     soundManager.playClick();
     diyaHoldInterval.current = setInterval(() => {
       setDiyaLitProgress(prev => {
-        const next = prev + 5;
+        const next = prev + 6;
         if (next >= 100) {
           clearInterval(diyaHoldInterval.current);
           soundManager.playBell();
           soundManager.playFanfare();
-          setTimeout(() => setCurrentStep(2), 600);
+          setTimeout(() => setCurrentStep(2), 350);
           return 100;
         }
         return next;
       });
-    }, 50);
+    }, 40);
   };
 
   const handleDiyaTouchEnd = () => {
@@ -56,31 +59,58 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
     }
   };
 
-  // Step 2 Aarti Circle Tap
-  const handleAartiMove = () => {
-    if (currentStep !== 2) return;
+  // Step 2 Aarti Circular Pointer Handlers
+  const handleAartiPointerMove = (clientX: number, clientY: number) => {
+    if (currentStep !== 2 || !aartiContainerRef.current) return;
+    const rect = aartiContainerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const rad = Math.atan2(clientY - centerY, clientX - centerX);
+    let deg = (rad * 180) / Math.PI;
+    if (deg < 0) deg += 360;
+
+    setFlameAngle(deg);
+
+    if (prevAngleRef.current !== null) {
+      let diff = deg - prevAngleRef.current;
+      if (diff < -180) diff += 360;
+      if (diff > 180) diff -= 360;
+
+      if (diff > 0) {
+        accumulatedDegRef.current += diff;
+        if (accumulatedDegRef.current >= 300) {
+          accumulatedDegRef.current = 0;
+          advanceAartiCircle();
+        }
+      }
+    }
+    prevAngleRef.current = deg;
+  };
+
+  const advanceAartiCircle = () => {
     soundManager.playBell();
     setAartiCircles(prev => {
       const next = prev + 1;
       if (next >= 3) {
         soundManager.playFanfare();
-        setTimeout(() => setCurrentStep(3), 600);
+        setTimeout(() => setCurrentStep(3), 350);
         return 3;
       }
       return next;
     });
   };
 
-  // Step 3 Bell Tap
+  // Step 3 Bell Tap (4 quick rhythmic rings)
   const handleBellRing = () => {
     if (currentStep !== 3) return;
     soundManager.playBell();
     setBellRings(prev => {
       const next = prev + 1;
-      if (next >= 5) {
+      if (next >= 4) {
         soundManager.playFanfare();
-        setTimeout(() => setCurrentStep(4), 600);
-        return 5;
+        setTimeout(() => setCurrentStep(4), 350);
+        return 4;
       }
       return next;
     });
@@ -93,6 +123,7 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
     soundManager.playFanfare();
     setModakOffered(true);
 
+    // Fast snappy reward feedback (400ms instead of 2000ms)
     setTimeout(() => {
       onWin({
         performance: 'PERFECT',
@@ -100,7 +131,7 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
         score: 300,
         tokens: 30
       });
-    }, 2000);
+    }, 450);
   };
 
   return (
@@ -205,19 +236,56 @@ export const PujaCelebration: React.FC<PujaCelebrationProps> = ({ onWin }) => {
             </div>
           )}
 
-          {/* Step 2: Circle Aarti */}
+          {/* Step 2: Circle Aarti (Flame follows finger/mouse around orbit) */}
           {currentStep === 2 && (
             <div className="flex flex-col items-center">
-              <button
-                onClick={handleAartiMove}
-                className="w-28 h-28 rounded-full border-4 border-dashed border-amber-400 flex flex-col items-center justify-center active:scale-90 transition animate-spin-slow bg-amber-500/20"
+              <div
+                ref={aartiContainerRef}
+                onMouseMove={(e) => handleAartiPointerMove(e.clientX, e.clientY)}
+                onTouchMove={(e) => {
+                  if (e.touches[0]) {
+                    handleAartiPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+                  }
+                }}
+                onClick={advanceAartiCircle}
+                className="relative w-36 h-36 rounded-full border-2 border-dashed border-amber-400/70 bg-amber-500/10 flex items-center justify-center cursor-pointer shadow-inner touch-none select-none"
               >
-                <span className="text-4xl animate-bounce">🪔</span>
-                <span className="text-[9px] font-black text-amber-200 mt-1">CIRCLE AARTI</span>
-              </button>
+                {/* Center Symbol */}
+                <div className="text-xl opacity-30 select-none pointer-events-none">🕉️</div>
+
+                {/* Orbiting Flame that follows finger / angle */}
+                <div
+                  className="absolute w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 p-0.5 shadow-lg shadow-orange-500/50 flex items-center justify-center pointer-events-none transition-transform duration-75"
+                  style={{
+                    left: `calc(50% + ${52 * Math.cos((flameAngle * Math.PI) / 180)}px - 24px)`,
+                    top: `calc(50% + ${52 * Math.sin((flameAngle * Math.PI) / 180)}px - 24px)`,
+                  }}
+                >
+                  <span className="text-2xl animate-pulse">🪔</span>
+                </div>
+              </div>
+
+              {/* Progress Dots 3 / 3 */}
               <div className="mt-3 text-center">
-                <span className="text-xs font-bold text-amber-300 block">CIRCLE THE FLAME ({aartiCircles} / 3)</span>
-                <span className="text-[10px] text-amber-200/80">Tap to wave auspicious aarti around Bappa</span>
+                <span className="text-xs font-black text-amber-300 block tracking-wider">
+                  {aartiCircles >= 3 ? '✨ AARTI COMPLETE!' : 'CIRCLE THE FLAME AROUND BAPPA'}
+                </span>
+
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  {[1, 2, 3].map(dot => (
+                    <div
+                      key={dot}
+                      className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                        aartiCircles >= dot
+                          ? 'bg-amber-400 shadow-[0_0_10px_#F59E0B] scale-110'
+                          : 'bg-white/20 border border-white/30'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-[10px] text-amber-200/70 mt-1 block">
+                  Drag finger or tap flame along circle
+                </span>
               </div>
             </div>
           )}

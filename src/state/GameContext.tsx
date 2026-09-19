@@ -68,13 +68,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     soundManager.updateSettings(state.settings.sfx, state.settings.music);
   }, [state.settings.sfx, state.settings.music]);
 
-  // Persist state changes
+  // Persist state changes with 250ms debounce to prevent disk lag on rapid taps
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (e) {
-      console.warn('Failed to save game state to localStorage:', e);
-    }
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Failed to save game state to localStorage:', e);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
   }, [state]);
 
   const navigateScreen = useCallback((screen: GameState['activeScreen']) => {
