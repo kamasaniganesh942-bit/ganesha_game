@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Outfit', system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+/* Touch friendly rules */
+* {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Smooth scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #0B0517;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for game drawers/screens */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(18, 10, 36, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: #FF6F00;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFA000;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Glow effects */
+.gold-glow {
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+}
+
+.saffron-glow {
+  filter: drop-shadow(0 0 12px rgba(255, 111, 0, 0.8));
+}
+
+.text-stroke-gold {
+  -webkit-text-stroke: 1px #FFD700;
+}
