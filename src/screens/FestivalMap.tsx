@@ -37,7 +37,7 @@ const DAYS_CONFIG: DayConfig[] = [
   },
   {
     day: 3,
-    title: 'BRING BAPPA & PUJA',
+    title: 'BRING BAPPA',
     subtitle: 'Choose idol, bring home & sacred rituals',
     icon: '🐘',
     badgeColor: 'from-pink-500 to-purple-600',
@@ -46,7 +46,7 @@ const DAYS_CONFIG: DayConfig[] = [
   },
   {
     day: 4,
-    title: 'THE GRAND FINALE',
+    title: 'GRAND VISARJAN',
     subtitle: 'Dhol tasha, flower celebration & lake Visarjan',
     icon: '🌅',
     badgeColor: 'from-teal-500 to-cyan-600',

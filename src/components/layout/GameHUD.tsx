@@ -41,24 +41,24 @@ export const GameHUD: React.FC<GameHUDProps> = ({ onPause, onReplay, onBack, sho
 
         {/* Right Stats & Action Buttons */}
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* Day 1 Money */}
-          {state.currentDay === 1 && (
-            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 font-bold text-xs sm:text-sm">
+          {/* Money (Always on Day 1, or when > 0) */}
+          {(state.currentDay === 1 || state.money > 0) && (
+            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 font-bold text-xs">
               <Coins className="w-3.5 h-3.5 text-emerald-400" />
               <span>₹{state.money}</span>
             </div>
           )}
 
-          {/* Tokens */}
-          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-pink-950/60 border border-pink-500/30 text-pink-300 font-bold text-xs sm:text-sm">
-            <Ticket className="w-3.5 h-3.5 text-pink-400" />
-            <span>{state.tokens}</span>
+          {/* Score */}
+          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-950/60 border border-amber-500/30 text-amber-300 font-bold text-xs">
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span>{state.score}</span>
           </div>
 
-          {/* Stars */}
-          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-950/60 border border-amber-500/30 text-amber-300 font-bold text-xs sm:text-sm">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span>{state.stars}</span>
+          {/* Tokens */}
+          <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-pink-950/60 border border-pink-500/30 text-pink-300 font-bold text-xs">
+            <Ticket className="w-3.5 h-3.5 text-pink-400" />
+            <span>{state.tokens}</span>
           </div>
 
           {/* Instant Replay Button */}

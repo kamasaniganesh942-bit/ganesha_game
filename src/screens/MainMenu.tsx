@@ -6,7 +6,7 @@ import { SettingsModal } from '../components/modals/SettingsModal';
 import { RewardShopModal } from '../components/modals/RewardShopModal';
 import { OffersModal } from '../components/modals/OffersModal';
 import { HowToPlayModal } from '../components/modals/HowToPlayModal';
-import { Play, Map, Gift, BookOpen, Settings, ShoppingBag } from 'lucide-react';
+import { Play, Map, Gift, BookOpen, Settings, ShoppingBag, Trophy } from 'lucide-react';
 import { GaneshaIdol } from '../components/common/GaneshaIdol';
 
 export const MainMenu: React.FC = () => {
@@ -124,50 +124,63 @@ export const MainMenu: React.FC = () => {
       </div>
 
       {/* Bottom Menu Buttons Area */}
-      <div className="relative z-10 w-full max-w-xs mx-auto space-y-3 pb-4">
+      <div className="relative z-10 w-full max-w-xs mx-auto space-y-2.5 pb-4">
         {/* Main PLAY Button */}
         <AnimatedButton
           variant="gold"
           size="lg"
-          className="w-full text-xl shadow-orange-500/50"
+          className="w-full text-xl shadow-orange-500/50 tracking-wider font-black"
           icon={<Play className="w-6 h-6 fill-current" />}
           soundType="dhol"
           onClick={() => navigateScreen('story_intro')}
         >
-          PLAY FESTIVAL
+          ▶ PLAY
         </AnimatedButton>
 
         {/* Festival Map */}
         <AnimatedButton
           variant="primary"
           size="md"
-          className="w-full"
+          className="w-full font-bold"
           icon={<Map className="w-5 h-5" />}
           onClick={() => navigateScreen('festival_map')}
         >
-          FESTIVAL MAP
+          🗺 FESTIVAL MAP
         </AnimatedButton>
 
-        {/* Two-column sub-actions */}
-        <div className="grid grid-cols-2 gap-2.5">
+        {/* Sub-actions: REWARDS & HOW TO PLAY */}
+        <div className="grid grid-cols-2 gap-2">
           <AnimatedButton
             variant="accent"
-            size="md"
-            icon={<Gift className="w-4 h-4" />}
-            onClick={() => setActiveModal('offers')}
+            size="sm"
+            className="text-xs"
+            icon={<Trophy className="w-4 h-4 text-yellow-300" />}
+            onClick={() => setActiveModal('shop')}
           >
-            OFFERS
+            🏆 REWARDS
           </AnimatedButton>
 
           <AnimatedButton
             variant="secondary"
-            size="md"
-            icon={<BookOpen className="w-4 h-4" />}
+            size="sm"
+            className="text-xs"
+            icon={<BookOpen className="w-4 h-4 text-amber-300" />}
             onClick={() => setActiveModal('help')}
           >
-            GUIDE
+            📖 HOW TO PLAY
           </AnimatedButton>
         </div>
+
+        {/* Settings Button */}
+        <AnimatedButton
+          variant="secondary"
+          size="sm"
+          className="w-full text-xs text-slate-300 hover:text-white"
+          icon={<Settings className="w-4 h-4" />}
+          onClick={() => setActiveModal('settings')}
+        >
+          ⚙ SETTINGS
+        </AnimatedButton>
       </div>
 
       {/* Modals */}

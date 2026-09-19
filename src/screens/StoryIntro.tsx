@@ -27,8 +27,8 @@ const STORY_STEPS = [
   },
   {
     icon: '🐘',
-    title: 'Four days. Many challenges. One celebration.',
-    subtitle: 'Join your friends across 24 festive celebrations to make this the best Utsav ever!',
+    title: 'Four days. One celebration.',
+    subtitle: 'Join your friends across 24 unique festive celebrations to make this the best Utsav ever!',
     graphic: '🥁 🌺 🌊',
     color: 'from-purple-600 to-amber-600'
   }
@@ -109,7 +109,7 @@ export const StoryIntro: React.FC = () => {
           soundType={isLastStep ? 'dhol' : 'click'}
           onClick={handleNext}
         >
-          {isLastStep ? 'START FESTIVAL' : 'NEXT'}
+          {isLastStep ? 'START' : 'NEXT'}
         </AnimatedButton>
       </div>
     </div>
